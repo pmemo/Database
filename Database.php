@@ -102,7 +102,7 @@ class Database
         return $st->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function arrayValues($column = null, $value = null)
+    public function toSingleArray($column = null, $value = null)
     {
         if ($column !== null) {
             $this->where($column, $value);
