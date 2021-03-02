@@ -102,13 +102,20 @@ class Database
         return $st->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function oneArrayValues($column = null, $value = null)
+    public function arrayValues($column = null, $value = null)
     {
         if ($column !== null) {
             $this->where($column, $value);
         }
         $st = $this->_build();
-        return array_values($st->fetch(PDO::FETCH_ASSOC));
+
+        $records = [];
+        foreach($st->fetchAll(PDO::FETCH_ASSOC) as $row => $arr) {
+            foreach($arr as $row => $value) {
+                array_push($records, $value);
+            }
+        }
+        return $records;
     }
 
     public function toJson()
