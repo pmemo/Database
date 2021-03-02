@@ -54,14 +54,9 @@ class Database
             $this->set($column, $value);
         }
     
-        if (self::$options['validation']) {
-            if ($this->validate()) {
-                $st = $this->_build();
-                return self::$pdo->lastInsertId() ? self::$pdo->lastInsertId() : -1;
-            }
-        } else {
+        if ($this->validate()) {
             $st = $this->_build();
-            return self::$pdo->lastInsertId();
+            return self::$pdo->lastInsertId() ? self::$pdo->lastInsertId() : -1;
         }
 
         return;
