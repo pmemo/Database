@@ -111,6 +111,15 @@ class Database
         return $st->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function oneArrayValues($column = null, $value = null)
+    {
+        if ($column !== null) {
+            $this->where($column, $value);
+        }
+        $st = $this->_build();
+        return array_values($st->fetch(PDO::FETCH_ASSOC));
+    }
+
     public function toJson()
     {
         $rows = $this->toArray();
