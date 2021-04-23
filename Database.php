@@ -381,6 +381,8 @@ class Database
     {
         $binds = array_merge($this->dataBinds, $this->conditionBinds);
         $st = self::$pdo->prepare($sql);
+
+        if(!$st) throw new Exception('Cannot prepare pdo. Check your database.');
         $st->execute($binds);
         return $st;
     }
