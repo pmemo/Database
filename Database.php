@@ -58,6 +58,31 @@ class Database
         return self::$pdo->lastInsertId();
     }
 
+    public function setFilled($column, $value = null)
+    {
+        if(is_array($column)) {
+            foreach($column as $key => $val) {
+                if($val != null) {
+                    $this->data += [$key => $val];
+                }
+            }
+        } elseif($value != null) {
+            $this->data += [$column => $value];
+        }
+
+        return $this;
+    }
+
+    public function update($column = null, $value = null)
+    {
+        if ($column) {
+            $this->setFilled($column, $value);
+        }
+        
+        $st = $this->_build();
+        return self::$pdo->lastInsertId();
+    }
+
     public function select($columns)
     {
         $columns = !is_array($columns) ? [$columns] : $columns;
